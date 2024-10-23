@@ -17,9 +17,11 @@ Below:
 Installation
 ------------
 
-Put the script in a PATH accessible directory, as ~/.local/bin You may
-need to set the execution bit (chmod) on it, and rename it to 'pomo' for
-convenience
+Put the script in a PATH accessible directory as ~/.local/bin
+
+You can use cp or create a link to the directory you cloned this repo:
+
+    ln -s $(pwd)/pomo.py ~/.local/bin/pomo.py
 
 Runtime dependencies
 --------------------
@@ -51,9 +53,9 @@ To run it with systemd as a user, write in
 
     [Service]
     Type=simple
-    ExecStart=--- home dir ---/.local/bin/pomo
+    ExecStart=%h/.local/bin/pomo.py
     Restart=on-failure
-    StandardOutput=file:%h/log_file
+    StandardOutput=file:/var/tmp/pomo.log
 
     [Install]
     WantedBy=default.target
