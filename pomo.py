@@ -49,7 +49,6 @@ def update_tray(s):
         current = current[:-1]
     if current == s:  # file contains the same string
         return
-    print(f"Updating tray with {s}")
     open(status_path, "w").write(s)
 
 
@@ -63,7 +62,6 @@ def quantum():
     current = round(time())
     delta = current - start
     countdown = period - delta
-    print(f"quantum countdown {countdown} period {period} delta {delta}")
     if countdown <= 0:
         update_tray("   ")
         if not expired:
