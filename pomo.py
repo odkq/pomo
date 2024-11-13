@@ -5,6 +5,7 @@ https://github.com/odkq/pomo
 
 Copyright (C) 2024 by Pablo Martin <pablo@odkq.com>. See LICENSE file.
 """
+
 from asyncio import set_event_loop, new_event_loop, sleep as asleep
 from inotify_simple import INotify, flags
 from os.path import exists
@@ -65,9 +66,17 @@ def quantum():
     if countdown <= 0:
         update_tray("   ")
         if not expired:
-            call(["zenity", "--info",
-                  "--text=\"<span font='30'>⏳Finished ⏳</span>\"",
-                  "--width", "500", "--height", "500"])
+            call(
+                [
+                    "zenity",
+                    "--info",
+                    "--text=\"<span font='30'>⏳Finished ⏳</span>\"",
+                    "--width",
+                    "500",
+                    "--height",
+                    "500",
+                ]
+            )
             expired = True
         return
     mins, secs = divmod(countdown, 60)
@@ -85,12 +94,15 @@ async def run_periodically():
 
 
 if len(argv) == 2:
+    if argv[1] == "out":
+        print(open("/var/tmp/pomo.status", "r").read())
+        exit(1)
     try:
         min = int(argv[1])
     except ValueError:
         print("Parameter must be a number (minutes), for example: pomo 25")
         exit(1)
-    open(period_path, 'w').write(f"{min}")
+    open(period_path, "w").write(f"{min}")
     exit(0)
 
 # Create the temporary files if not there
